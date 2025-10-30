@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <div className="mx-auto my-8 w-2/4" dir="rtl">
-      <p dir="rtl">16/4/1968 היומן של דניאל - עמוד 2</p>
+      <p dir="rtl">16/4/1968 היומן של דניאל - פרק 2</p>
       <br></br>
       <p dir="rtl">
         אור ולי החליטו להציל אותי וחשבו שזה יהיה ממש מצחיק לגרום לי ליצור את
