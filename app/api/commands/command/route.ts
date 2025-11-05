@@ -250,6 +250,7 @@ function handleCommand(userId: string, command: string, leePassed: boolean) {
   }
   user.firstTurn++;
 
+  command = command.toLowerCase().trim();
   user.leePassed = leePassed;
   if (
     command.startsWith("/search_chest") &&
@@ -399,7 +400,7 @@ function sendResponseString(userId: string): string {
     user.location.y == 0 &&
     !user.figuredOutCommands
   ) {
-    str = "אתם עדיין באותו חלל ריק.";
+    str = "אתם עדיין באותו חלל ריק. אין כלום מימינה, מלמטה ומשמאלה.";
   } else if (user.sendMap == true) {
     str = "/step6_dungeonsanddragons/map.png";
     user.sendMap = false;
@@ -418,7 +419,7 @@ function sendResponseString(userId: string): string {
   } else if (user.searchChest) {
     if (user.location.x == 2 && user.location.y == -3) {
       str =
-        "מצאתם את התיבה! היא מכילה: ACCESS DENIED, ADMINISTRATOR PRIVILEGES MISSING.";
+        "מצאתם את התיבה! היא מכילה: ACCESS DENIED, ROOT ADMINISTRATOR PRIVILEGES MISSING.";
     } else if (user.minisTile >= 0 && user.minisTile < 13) {
       str =
         "המממ??? איך אתם מכירים את הפקודה הזו?? לא! אתם בטח סוכנים חשאיים של אור ולי. אני מסרב לשוחח איתכם.";
