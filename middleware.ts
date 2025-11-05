@@ -42,16 +42,16 @@ export function middleware(req: NextRequest) {
         });
       } else {
         // APPLY PENALTY
-        res.cookies.set("penalty", `${Date.now() + 1000 * 200}`, {
-          // the number is the amount of seconds to force to wait
-          maxAge: 1000000,
-        });
+        // res.cookies.set("penalty", `${Date.now() + 1000 * 200}`, {
+        //   // the number is the amount of seconds to force to wait
+        //   maxAge: 1000000,
+        // });
       }
     } else {
-      res.headers.set(
-        "penalty",
-        `${((parseFloat(penaltyCookie.value) - Date.now()) / 1000).toFixed()}`,
-      );
+      // res.headers.set(
+      //   "penalty",
+      //   `${((parseFloat(penaltyCookie.value) - Date.now()) / 1000).toFixed()}`,
+      // );
     }
   } else if (req.nextUrl.pathname == "/stepa4_attackontitan") {
     const password = req.nextUrl.searchParams.get("password");

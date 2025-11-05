@@ -98,7 +98,7 @@ export default function Home() {
         }, {});
 
       let penaltyString = response.headers.get("penalty");
-      if (penaltyString != null) {
+      if (false) {
         setError(
           `יש להמתין ${penaltyString} שניות עד לניחוש הבא. הפתרון לא דורש ניחוש קומבינציות.`,
         );

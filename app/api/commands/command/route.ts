@@ -46,7 +46,6 @@ interface UserData {
   beatLee: boolean;
   passedGameTile: number;
   sugar: boolean;
-  canTeleport: boolean;
   easterEgg: boolean;
 }
 let users: Map<string, UserData> = new Map();
@@ -57,7 +56,7 @@ let emptyDialogue = [
   "[X] נראה שאין פה שום דבר.",
 ];
 let danielDialogue = [
-  "אתם ממשיכים לחפש סימן חיים כלשהו ביער, ופתאום מוצאים דמות בלונדינית, קשורה עם חבל לעץ עבה במיוחד. אתם מזהים את הדמות בתור הראש הצף מאוקיינוס הדם שנתנה לכם עצות ועזרה במהלך החידה.",
+  "אתם ממשיכים לחפש סימן חיים כלשהו, ופתאום מוצאים דמות בלונדינית, קשורה עם חבל לעץ עבה במיוחד. אתם מזהים את הדמות בתור הראש הצף מאוקיינוס הדם שנתנה לכם עצות ועזרה במהלך החידה.",
   "דניאל: שלום שוב.",
   "דניאל: הצלחתם למצוא אותי.",
   "דניאל: כפי שאתם רואים, אור ולי לא אהבו שנתתי לכם לעבור את חידה 5 בכזו קלות.",
@@ -69,7 +68,7 @@ let danielDialogue = [
 ];
 let danielRopeDialogue = [
   "דניאל: אה... כן..",
-  "דניאל: הם קשרו אותי לעץ",
+  "דניאל: הם קשרו אותי לעץ.",
   "דניאל: יכולים לעזור לי לצאת מפה?",
   "*אתם פותחים את הקשר...*",
   "*הקשר נפתח*",
@@ -111,9 +110,7 @@ let tomDialogue = [
   "*אתם תוהים אם תום תמיד מדבר ככה*",
   "תום: אנוכי חושד אם כי לא אחרי מעשה וטעייה רבים שמימיני נמצא פורטל אינטר-דיימנסיונלי בו אנוכי תקוע כבר רבות שנים.",
   "תום: יהיה לי לכבוד גדול להעניק לכם מכשיר המאפשר לזהות את מיקומכם, הרי שההִתְעַתְּקוּת מקשה על זאת.",
-  "*קיבלתם את המכשיר*",
-  "תום: איך לבצע את הההִתְעַתְּקוּת בפורטל?",
-  "תום: יאומת כי אנוכי עדיין זקוק לפורטל בכדי למצוא את הסוכר. הפורטל עובד רק עבור אדם אחד.",
+  "תום: עם זאת, יאומת כי אנוכי עדיין זקוק למכשיר בכדי למצוא את הסוכר.",
   "תום: סליחות רבות.",
   "תום: אם אמצא את הסוכר, אין עוררין כי אעזור לכם.",
   "תום: וזאת הכל.",
@@ -204,12 +201,13 @@ let PassedGameDialogue = [
   "לי: רגע מה זאת אומרת 'כתב את זה'? זה אני",
   "אור: לא לא, אתה לא מבין. מי שכתב את מה שאתה אמור להגיד.",
   "לי: מה זאת אומרת מי שכתב את מה שאני אמור להגיד? אני אומר את מה שאני רוצה להגיד!",
-  "אור: לא אחי, תראה. אני יכול לגרום לך להגיד מה שאתה רוצה",
+  "אור: לא אחי, תראה. אני יכול לגרום לך להגיד מה שאני רוצה",
   "לי: אני שונא אסקייפ רומס, אני אוכל סטייק לארוחת בוקר ויש לי לפחות שלושה ילדים כלואים במרתף.",
   "לי: היי מה זה? מי כותב את זה? זה אתה?",
+  "לי: וזה שקר מוחלט! אני לא אוכל סטייק ואני לא שונא אסקייפ רומס!",
   "אור: לא, זה אני. דניאל. כל מה שאמרת בחידה עד כה נכתב על ידיי. כל מחשבה וזיכרון שאי פעם היו לך הם בגללי.",
   "לי: מה? אז אין לנו free will?",
-  "אור: לא, ואחרי בדיוק 4 שניות הם יעברו לעמוד הסיום וה-consciousness שלך כמו גם כל הזכרונות שלך ימחקו לתמיד.",
+  "אור: לא, ובעוד בדיוק 4 שניות הם יעברו לעמוד הסיום וה-consciousness שלך כמו גם כל הזכרונות שלך ימחקו לתמיד.",
   "לי: מה? לאאאאאא",
 ];
 
@@ -242,7 +240,6 @@ function resetUser(userId: string, resetFlag: boolean) {
     beatLee: false,
     passedGameTile: -1,
     sugar: false,
-    canTeleport: false,
     easterEgg: false,
   });
 }
@@ -264,8 +261,8 @@ function handleCommand(userId: string, command: string, leePassed: boolean) {
     return;
   }
   switch (command) {
-    case "/cheats_unlock_hi":
-      user.torches = 1000;
+    case "/cheats_unlock_hiasdasd":
+      user.torches += 100;
       break;
     case "/confrontorandlee":
       user.easterEgg = true;
@@ -372,29 +369,27 @@ function sendResponseString(userId: string): string {
   if (user.firstTurn < 1 && user.torches == 15) {
     str =
       "אתם נמצאים בחלל כהה ואפל, ריק מכל אור. נראה שאין כלום מימינה, משמאלה ומלמטה. למזלכם, הגעתם עם לפידים.";
-  } else if (user.canTeleport) {
-    if (user.location.x == 7 && user.location.y == 7) {
-      user.location.x = -6;
-      user.location.y = -12;
-      str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר.";
-    } else if (user.location.x == -6 && user.location.y == -12) {
-      user.location.x = -6;
-      user.location.y = 5;
-      str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר.";
-    } else if (user.location.x == -6 && user.location.y == 5) {
-      user.location.x = 19;
-      user.location.y = 4;
-      str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר.";
-    } else if (user.location.x == 19 && user.location.y == 4) {
-      user.location.x = 9;
-      user.location.y = 1;
-      str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר.";
-    } else if (user.location.x == 9 && user.location.y == 1) {
-      user.location.x = 7;
-      user.location.y = 7;
-      str =
-        "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר. נראה שחזרתם להתחלה, אבל משהו שונה.. לאוויר יש ריח נוסטלגי, נראה שאתם בעבר. /step6_dungeonsanddragons/past";
-    }
+  } else if (user.location.x == 7 && user.location.y == 7) {
+    user.location.x = -6;
+    user.location.y = -12;
+    str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר. [1]";
+  } else if (user.location.x == -6 && user.location.y == -12) {
+    user.location.x = -6;
+    user.location.y = 5;
+    str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר. [2]";
+  } else if (user.location.x == -6 && user.location.y == 5) {
+    user.location.x = 19;
+    user.location.y = 4;
+    str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר. [3]";
+  } else if (user.location.x == 19 && user.location.y == 4) {
+    user.location.x = 9;
+    user.location.y = 1;
+    str = "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר. [4]";
+  } else if (user.location.x == 9 && user.location.y == 1) {
+    user.location.x = 7;
+    user.location.y = 7;
+    str =
+      "כוח אפל ששכן במקום בו הייתם שיגר אתכם למיקום אחר. נראה שחזרתם להתחלה, אבל משהו שונה.. לאוויר יש ריח נוסטלגי, נראה שאתם בעבר. /step6_dungeonsanddragons/past";
   } else if (user.easterEgg) {
     str =
       "אור ולי: הממ?? מה אתם רוצים מאיתנו? .. ואיך אתם יודעים על הפקודה הזו?!";
@@ -472,22 +467,19 @@ function sendResponseString(userId: string): string {
         : holtDialogue[user.holtTile];
   } else if (user.tomTile > -1) {
     if (user.sugar == true) {
-      if (user.canTeleport) {
+      if (user.device) {
         str =
           "תום: תודות רבות שוב! או כמו שחברי הטוב תהלים היה אומר: הוֹדוּ לַה' כִּי-טוֹב, כִּי לְעוֹלָם חַסְדּוֹ.";
       } else {
         str =
-          "תום: מצאתם את הסוכר? *שמאלה* בהולצמן? אור הערור הזה! אלף ואחת קללות יפלו עליו! ובכן, אנוכי איננו זקוק לפורטל יותר. הרגישו חופשי להשתמש בו.";
+          "תום: מצאתם את הסוכר? *שמאלה* בהולצמן? אור הערור הזה! אלף ואחת קללות יפלו עליו! ובכן, אנוכי איננו זקוק למכשיר יותר, אתן לכם אותו. הושיטו ידכם. *קיבלתם את המכשיר*";
       }
-      user.canTeleport = true;
+      user.device = true;
     } else {
       str =
         user.tomTile >= tomDialogue.length
           ? tomDialogue[tomDialogue.length - 1]
           : tomDialogue[user.tomTile];
-    }
-    if (str.includes("קיבלתם את המכשיר")) {
-      user.device = true;
     }
   } else if (user.leeTile > -1) {
     if (user.leePassed) {
@@ -504,7 +496,7 @@ function sendResponseString(userId: string): string {
           ? leeDialogue[leeDialogue.length - 1]
           : leeDialogue[user.leeTile];
     }
-  } else if (user.orTile > 6) {
+  } else if (user.orTile > -1) {
     if (
       user.orNotes[0] == true &&
       user.orNotes[1] == true &&
