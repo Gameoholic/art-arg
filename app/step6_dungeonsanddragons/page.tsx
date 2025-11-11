@@ -140,7 +140,7 @@ export default function Home() {
           if (letterIndex < testString.length) {
             setCurrentString(" " + testString.substring(0, letterIndex + 1));
             setLetterIndex(letterIndex + 1);
-            console.log(currentString);
+            //console.log(currentString);
           } else {
             setFinished(true);
           }
