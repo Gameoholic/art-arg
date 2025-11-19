@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
+  console.log(console.log("someone accessed "), req.nextUrl.pathname);
+
   if (req.nextUrl.pathname == "/step2_puppet") {
     const passwordParam = req.nextUrl.searchParams.get("password");
     if (passwordParam == null) {

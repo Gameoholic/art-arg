@@ -263,7 +263,9 @@ function handleCommand(userId: string, command: string, leePassed: boolean) {
   }
   switch (command) {
     case "/cheats_unlock_hiasdasd":
+      user.beatOr = true;
       user.torches += 100;
+      user;
       break;
     case "/confrontorandlee":
       user.easterEgg = true;
